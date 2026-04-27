@@ -1,0 +1,99 @@
+{
+  "best_model": "efficientnet_b1_weighted_ce",
+  "best_tta_acc": 0.9904153354632588,
+  "best_test_acc": 0.9840255591054313,
+  "all_results": [
+    {
+      "name": "efficientnet_b0_focal",
+      "model": "efficientnet_b0",
+      "loss": "focal",
+      "test_acc": 0.9616613418530351,
+      "tta_acc": 0.9712460063897763,
+      "best_val_acc": 0.9808306709265175,
+      "epochs": 21,
+      "time_min": 19.144921755790712,
+      "min_f1": 0.8648648648648649,
+      "min_f1_class": "Bacterial Blight",
+      "macro_f1": 0.9581341049681942
+    },
+    {
+      "name": "efficientnet_b1_focal",
+      "model": "efficientnet_b1",
+      "loss": "focal",
+      "test_acc": 0.9201277955271565,
+      "tta_acc": 0.9265175718849841,
+      "best_val_acc": 0.987220447284345,
+      "epochs": 19,
+      "time_min": 17.3686669866244,
+      "min_f1": 0.8,
+      "min_f1_class": "Curl Virus",
+      "macro_f1": 0.9035684792008846
+    },
+    {
+      "name": "efficientnet_b2_focal",
+      "model": "efficientnet_b2",
+      "loss": "focal",
+      "test_acc": 0.9584664536741214,
+      "tta_acc": 0.9808306709265175,
+      "best_val_acc": 0.9936102236421726,
+      "epochs": 23,
+      "time_min": 21.014394064744312,
+      "min_f1": 0.9333333333333333,
+      "min_f1_class": "Anthracnose",
+      "macro_f1": 0.9734217459988008
+    },
+    {
+      "name": "efficientnet_b3_focal",
+      "model": "efficientnet_b3",
+      "loss": "focal",
+      "test_acc": 0.30990415335463256,
+      "tta_acc": 0.3514376996805112,
+      "best_val_acc": 0.9488817891373802,
+      "epochs": 12,
+      "time_min": 11.230023117860158,
+      "min_f1": 0.23809523809523808,
+      "min_f1_class": "Deficiency Leaf",
+      "macro_f1": 0.34043092402460207
+    },
+    {
+      "name": "resnet50_focal",
+      "model": "resnet50",
+      "loss": "focal",
+      "test_acc": 0.9808306709265175,
+      "tta_acc": 0.9840255591054313,
+      "best_val_acc": 0.9776357827476039,
+      "epochs": 30,
+      "time_min": 27.912688986460367,
+      "min_f1": 0.9375,
+      "min_f1_class": "Anthracnose",
+      "macro_f1": 0.9728222349545879
+    },
+    {
+      "name": "efficientnet_b1_weighted_ce",
+      "model": "efficientnet_b1",
+      "loss": "weighted_ce",
+      "test_acc": 0.9840255591054313,
+      "tta_acc": 0.9904153354632588,
+      "best_val_acc": 0.9968051118210862,
+      "epochs": 30,
+      "time_min": 27.427219728628796,
+      "min_f1": 0.967741935483871,
+      "min_f1_class": "Anthracnose",
+      "macro_f1": 0.9840469208211143
+    },
+    {
+      "name": "efficientnet_b2_weighted_ce",
+      "model": "efficientnet_b2",
+      "loss": "weighted_ce",
+      "test_acc": 0.9680511182108626,
+      "tta_acc": 0.9776357827476039,
+      "best_val_acc": 0.9904153354632588,
+      "epochs": 30,
+      "time_min": 29.481273492177326,
+      "min_f1": 0.9090909090909091,
+      "min_f1_class": "Spider Mites",
+      "macro_f1": 0.9686949481350888
+    }
+  ],
+  "timestamp": "2026-04-13T00:23:22.311974"
+}

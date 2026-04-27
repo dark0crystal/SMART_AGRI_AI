@@ -11,6 +11,9 @@ import 'screens/diagnosis_detail_screen.dart';
 import 'screens/diagnosis_history_screen.dart';
 import 'screens/diagnosis_hub_screen.dart';
 import 'screens/diagnosis_text_screen.dart';
+import 'screens/admin_catalog_screen.dart';
+import 'screens/admin_disease_edit_screen.dart';
+import 'screens/admin_plant_diseases_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/register_screen.dart';
@@ -45,6 +48,7 @@ class _FirebaseInitErrorApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: SafeArea(
           child: Padding(
@@ -108,6 +112,36 @@ class _MyAppState extends State<MyApp> {
           builder: (context, state) => const HomeScreen(),
         ),
         GoRoute(
+          path: '/admin',
+          builder: (context, state) => const AdminCatalogScreen(),
+        ),
+        GoRoute(
+          path: '/admin/plant/:plantId',
+          builder: (context, state) {
+            final raw = state.pathParameters['plantId'];
+            final plantId = int.tryParse(raw ?? '');
+            if (plantId == null) {
+              return const Scaffold(
+                body: Center(child: Text('Invalid plant')),
+              );
+            }
+            return AdminPlantDiseasesScreen(plantId: plantId);
+          },
+        ),
+        GoRoute(
+          path: '/admin/disease/:diseaseId',
+          builder: (context, state) {
+            final raw = state.pathParameters['diseaseId'];
+            final diseaseId = int.tryParse(raw ?? '');
+            if (diseaseId == null) {
+              return const Scaffold(
+                body: Center(child: Text('Invalid disease')),
+              );
+            }
+            return AdminDiseaseEditScreen(diseaseId: diseaseId);
+          },
+        ),
+        GoRoute(
           path: '/diagnosis',
           builder: (context, state) => const DiagnosisHubScreen(),
         ),
@@ -150,9 +184,31 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Smart Agri AI',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF3AAED8),
+          primary: const Color(0xFF3AAED8),
+          surface: Colors.white,
+        ),
+        scaffoldBackgroundColor: Colors.white,
+        filledButtonTheme: FilledButtonThemeData(
+          style: FilledButton.styleFrom(
+            backgroundColor: const Color(0xFF3AAED8),
+            foregroundColor: Colors.white,
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFF3AAED8),
+            foregroundColor: Colors.white,
+          ),
+        ),
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: Color(0xFF3AAED8),
+          foregroundColor: Colors.white,
+        ),
       ),
       routerConfig: _router,
     );

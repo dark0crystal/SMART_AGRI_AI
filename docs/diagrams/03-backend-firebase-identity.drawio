@@ -1,0 +1,34 @@
+<mxfile host="app.diagrams.net" modified="2026-04-15T00:00:00.000Z" agent="Smart Agri AI" version="22.0.0">
+  <diagram id="firebase-subsystem" name="Backend — Firebase identity">
+    <mxGraphModel dx="1100" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="boundary" value="Subsystem — Identity &amp; token services (Firebase)" style="swimlane;whiteSpace=wrap;html=1;fillColor=none;startSize=44;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="180" y="100" width="480" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-verify" value="Verify identity token" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="260" y="60" width="160" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-create" value="Create / manage user" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="60" y="140" width="160" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-syncuid" value="Sync UID to backend" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="260" y="150" width="170" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="fb" value="Firebase" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=default;" vertex="1" parent="1">
+          <mxGeometry x="60" y="180" width="40" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" style="endArrow=none;html=1;" edge="1" parent="1" source="fb" target="uc-verify">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" style="endArrow=none;html=1;" edge="1" parent="1" source="fb" target="uc-create">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inc" value="«include»" style="endArrow=open;dashed=1;html=1;endSize=12;fontStyle=2" edge="1" parent="boundary" source="uc-verify" target="uc-syncuid">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

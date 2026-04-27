@@ -1,0 +1,73 @@
+<mxfile host="app.diagrams.net" modified="2026-04-15T00:00:00.000Z" agent="Smart Agri AI" version="22.0.0">
+  <diagram id="client-diagnosis" name="Client — Diagnosis, records &amp; admin">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="boundary" value="Subsystem — Diagnosis, records &amp; admin&#xa;(hub, AI diagnosis, history, ops)" style="swimlane;whiteSpace=wrap;html=1;fillColor=none;startSize=48;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="160" y="40" width="420" height="440" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-hub" value="Open diagnosis hub" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="40" y="60" width="140" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-cam" value="Diagnose from camera&#xa;(photo upload)" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="220" y="52" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-text" value="Diagnose from text&#xa;(symptoms)" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="220" y="130" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-hist" value="View diagnosis history" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="40" y="220" width="170" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-detail" value="View diagnosis detail" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="230" y="220" width="160" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-admin" value="Access admin tools&#xa;(role-gated)" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="40" y="310" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-console" value="Open external consoles&#xa;(links)" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="230" y="316" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="farmer" value="Farmer / User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=default;" vertex="1" parent="1">
+          <mxGeometry x="40" y="140" width="40" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="admin" value="Admin" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=default;" vertex="1" parent="1">
+          <mxGeometry x="40" y="340" width="40" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ai" value="AI Vision&#xa;(EfficientNet)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=default;" vertex="1" parent="1">
+          <mxGeometry x="640" y="140" width="40" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" style="endArrow=none;html=1;" edge="1" parent="1" source="farmer" target="uc-hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" style="endArrow=none;html=1;" edge="1" parent="1" source="farmer" target="uc-cam">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" style="endArrow=none;html=1;" edge="1" parent="1" source="farmer" target="uc-text">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" style="endArrow=none;html=1;" edge="1" parent="1" source="farmer" target="uc-hist">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" style="endArrow=none;html=1;" edge="1" parent="1" source="farmer" target="uc-detail">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" style="endArrow=none;html=1;" edge="1" parent="1" source="admin" target="uc-hist">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" style="endArrow=none;html=1;" edge="1" parent="1" source="admin" target="uc-admin">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" style="endArrow=none;html=1;" edge="1" parent="1" source="ai" target="uc-cam">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" style="endArrow=none;html=1;" edge="1" parent="1" source="ai" target="uc-text">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inc" value="«include»" style="endArrow=open;dashed=1;html=1;endSize=12;fontStyle=2" edge="1" parent="boundary" source="uc-admin" target="uc-console">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

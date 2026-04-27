@@ -1,0 +1,76 @@
+<mxfile host="app.diagrams.net" modified="2026-04-15T00:00:00.000Z" agent="Smart Agri AI" version="22.0.0">
+  <diagram id="high-level" name="Smart Agri AI — high level (2 subsystems)">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="outer" value="Smart Agri AI" style="swimlane;whiteSpace=wrap;html=1;fillColor=none;startSize=36;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="140" y="40" width="720" height="520" as="geometry" />
+        </mxCell>
+        <mxCell id="S1" value="Subsystem — User diagnosis workflow&#xa;(sign-in, inputs, results, history)" style="swimlane;whiteSpace=wrap;html=1;fillColor=none;startSize=44;fontStyle=0" vertex="1" parent="outer">
+          <mxGeometry x="28" y="52" width="400" height="440" as="geometry" />
+        </mxCell>
+        <mxCell id="S2" value="Subsystem — Data &amp; records management&#xa;(admin backend storage)" style="swimlane;whiteSpace=wrap;html=1;fillColor=none;startSize=44;fontStyle=0" vertex="1" parent="outer">
+          <mxGeometry x="448" y="52" width="244" height="440" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-auth" value="Verify identity" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="S1">
+          <mxGeometry x="110" y="54" width="160" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-submit" value="Submit diagnosis input&#xa;(photo or symptoms)" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="S1">
+          <mxGeometry x="96" y="134" width="188" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-review" value="Review diagnosis&#xa;output" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="S1">
+          <mxGeometry x="104" y="222" width="172" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-browse" value="Browse past&#xa;diagnoses" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="S1">
+          <mxGeometry x="104" y="318" width="172" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-db" value="Maintain application&#xa;data" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="S2">
+          <mxGeometry x="42" y="200" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="user" value="User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=default;" vertex="1" parent="1">
+          <mxGeometry x="40" y="220" width="40" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="admin" value="Admin" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=default;" vertex="1" parent="1">
+          <mxGeometry x="900" y="220" width="40" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="eu1" style="endArrow=none;html=1;" edge="1" parent="1" source="user" target="uc-auth">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eu2" style="endArrow=none;html=1;" edge="1" parent="1" source="user" target="uc-submit">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eu3" style="endArrow=none;html=1;" edge="1" parent="1" source="user" target="uc-review">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eu4" style="endArrow=none;html=1;" edge="1" parent="1" source="user" target="uc-browse">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea1" style="endArrow=none;html=1;" edge="1" parent="1" source="admin" target="uc-auth">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea2" style="endArrow=none;html=1;" edge="1" parent="1" source="admin" target="uc-submit">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea3" style="endArrow=none;html=1;" edge="1" parent="1" source="admin" target="uc-review">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea4" style="endArrow=none;html=1;" edge="1" parent="1" source="admin" target="uc-db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inc1" value="«include»" style="endArrow=open;dashed=1;html=1;endSize=12;fontStyle=2" edge="1" parent="S1" source="uc-auth" target="uc-submit">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inc2" value="«include»" style="endArrow=open;dashed=1;html=1;endSize=12;fontStyle=2" edge="1" parent="S1" source="uc-submit" target="uc-review">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inc3" value="«include»" style="endArrow=open;dashed=1;html=1;endSize=12;fontStyle=2" edge="1" parent="outer" source="uc-review" target="uc-db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ext1" value="«extend»" style="endArrow=open;dashed=1;html=1;endSize=12;fontStyle=2;startArrow=openThin;startFill=0;" edge="1" parent="S1" source="uc-browse" target="uc-review">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

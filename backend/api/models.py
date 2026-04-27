@@ -7,7 +7,6 @@ class User(models.Model):
     class Role(models.TextChoices):
         USER = "user", "user"
         ADMIN = "admin", "admin"
-        EXPERT = "expert", "expert"
 
     id = models.CharField(max_length=128, primary_key=True)
     email = models.EmailField(max_length=255, unique=True)

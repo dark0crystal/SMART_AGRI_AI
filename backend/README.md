@@ -14,7 +14,7 @@ From this directory (`backend/`):
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-python manage.py migrate
+python manage.py seed_firestore_catalog
 ```
 
 On Windows, activate the virtualenv with `.venv\Scripts\activate` instead of `source .venv/bin/activate`.
@@ -74,8 +74,53 @@ Optional overrides:
 Restart `runserver` so `load_dotenv` picks it up. The Flutter `GoogleService-Info.plist` / `google-services.json` are **not** a substitute — the server needs this **Admin** JSON.
 - **Firestore / Storage / RTDB:** Import helpers from `api.firebase_client` (`get_firestore_client`, `get_storage_bucket`, `get_rtdb_reference`). The app initializes lazily on first use.
 
-## Admin and database
+### Admin catalog API
 
-- Create a superuser: `python manage.py createsuperuser`
-- Admin UI: **http://127.0.0.1:8000/admin/**
-- Default database: SQLite at `db.sqlite3` (ignored by git via `.gitignore`)
+Firestore user documents must have `role: "admin"` for these routes (otherwise **403**). All use `Authorization: Bearer <Firebase ID token>`.
+
+| Method | Path | Purpose |
+|--------|------|---------|
+| `GET` | `/api/admin/catalog/plants/` | List plants |
+| `GET` / `PATCH` | `/api/admin/catalog/plants/<plant_id>/` | Read or update plant names/descriptions (EN/AR) |
+| `GET` | `/api/admin/catalog/plants/<plant_id>/diseases/` | List diseases for a plant |
+| `GET` / `PATCH` | `/api/admin/catalog/diseases/<disease_id>/` | Read or update disease names, descriptions, causes, treatment (EN/AR) |
+
+Updates merge into the existing Firestore documents.
+
+## Vision model (image diagnosis)
+
+Image diagnoses use an in-process **PyTorch + timm** checkpoint (same format as `models/train_all_models.py` / `models/app.py`). Default weights path is **`models/final_model.pth`** relative to this `backend/` directory.
+
+- Install dependencies with `pip install -r requirements.txt`. PyTorch wheels are large. For **GPU/CUDA**, use the selector at [pytorch.org](https://pytorch.org/get-started/locally/) instead of the default CPU wheels if needed.
+- After pulling the project, ensure the `.pth` file exists at that path (or set `VISION_MODEL_PATH`). Checkpoint files are not always committed to git because of size; copy your trained `final_model.pth` into `backend/models/` when deploying.
+
+### Vision-related environment variables
+
+| Variable | Purpose |
+|----------|---------|
+| `VISION_MODEL_PATH` | Path to `final_model.pth` (absolute or relative to `backend/`) |
+| `VISION_MIN_CONFIDENCE` | If the model’s top probability is below this (default `0.35`), the stored disease is **Unknown / low confidence** |
+| `VISION_IMAGE_MAX_BYTES` | Max download size for `image_url` (default 10 MiB) |
+| `VISION_IMAGE_DOWNLOAD_TIMEOUT` | HTTP timeout seconds for downloading the image (default `30`) |
+| `VISION_UNKNOWN_DISEASE_NAME_EN` | English `Disease.name_en` for the fallback row (default `Unknown / low confidence`) |
+| `VISION_MODEL_NAME` | Fallback timm architecture when checkpoint has no `config.model` (default `efficientnet_b1`) |
+
+**Text diagnosis:** `POST` with `input_type: text` still uses a **placeholder** heuristic (`text_stub_v1` in `ai_logs`), not an ML model. The Flutter text flow remains usable until a text model is integrated.
+
+### Gradio demo (`models/app.py`)
+
+From `backend/models/` (with the same virtualenv and packages as the API):
+
+```bash
+cd models
+python app.py --model-path final_model.pth
+```
+
+The script adds the parent `backend/` directory to `sys.path` so it can import the shared `vision` package.
+
+## Firestore data initialization
+
+- Seed the lemon catalog in Firestore: `python manage.py seed_firestore_catalog`
+- Optional one-time legacy migration from SQLite: `python manage.py backfill_sqlite_to_firestore --sqlite-path ./db.sqlite3`
+- Validate migration parity by counts: `python manage.py check_firestore_parity --sqlite-path ./db.sqlite3`
+- Runtime persistence is Firebase Firestore only; Django does not use SQLite for app tables anymore.

@@ -1,0 +1,205 @@
+<mxfile host="app.diagrams.net" modified="2026-04-15T00:00:00.000Z" agent="Smart Agri AI" version="22.0.0">
+  <diagram id="client-account" name="01 — Client: Account &amp; app shell">
+    <mxGraphModel dx="1100" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="boundary" value="Subsystem — Account &amp; app shell&#xa;(register, sign-in, home)" style="swimlane;whiteSpace=wrap;html=1;fillColor=none;startSize=48;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="200" y="80" width="320" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-reg" value="Register" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="90" y="70" width="120" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-login" value="Log in" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="90" y="140" width="120" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-home" value="View home dashboard" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="70" y="210" width="160" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="farmer" value="Farmer / User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=default;" vertex="1" parent="1">
+          <mxGeometry x="80" y="160" width="40" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" style="endArrow=none;html=1;" edge="1" parent="1" source="farmer" target="uc-reg">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" style="endArrow=none;html=1;" edge="1" parent="1" source="farmer" target="uc-login">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" style="endArrow=none;html=1;" edge="1" parent="1" source="farmer" target="uc-home">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="client-diagnosis" name="02 — Client: Diagnosis &amp; admin">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="boundary" value="Subsystem — Diagnosis, records &amp; admin&#xa;(hub, AI diagnosis, history, ops)" style="swimlane;whiteSpace=wrap;html=1;fillColor=none;startSize=48;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="160" y="40" width="420" height="440" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-hub" value="Open diagnosis hub" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="40" y="60" width="140" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-cam" value="Diagnose from camera&#xa;(photo upload)" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="220" y="52" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-text" value="Diagnose from text&#xa;(symptoms)" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="220" y="130" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-hist" value="View diagnosis history" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="40" y="220" width="170" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-detail" value="View diagnosis detail" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="230" y="220" width="160" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-admin" value="Access admin tools&#xa;(role-gated)" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="40" y="310" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-console" value="Open external consoles&#xa;(links)" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="230" y="316" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="farmer" value="Farmer / User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=default;" vertex="1" parent="1">
+          <mxGeometry x="40" y="140" width="40" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="admin" value="Admin" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=default;" vertex="1" parent="1">
+          <mxGeometry x="40" y="340" width="40" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ai" value="AI Vision&#xa;(EfficientNet)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=default;" vertex="1" parent="1">
+          <mxGeometry x="640" y="140" width="40" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" style="endArrow=none;html=1;" edge="1" parent="1" source="farmer" target="uc-hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" style="endArrow=none;html=1;" edge="1" parent="1" source="farmer" target="uc-cam">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" style="endArrow=none;html=1;" edge="1" parent="1" source="farmer" target="uc-text">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" style="endArrow=none;html=1;" edge="1" parent="1" source="farmer" target="uc-hist">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" style="endArrow=none;html=1;" edge="1" parent="1" source="farmer" target="uc-detail">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" style="endArrow=none;html=1;" edge="1" parent="1" source="admin" target="uc-hist">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" style="endArrow=none;html=1;" edge="1" parent="1" source="admin" target="uc-admin">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" style="endArrow=none;html=1;" edge="1" parent="1" source="ai" target="uc-cam">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" style="endArrow=none;html=1;" edge="1" parent="1" source="ai" target="uc-text">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inc" value="«include»" style="endArrow=open;dashed=1;html=1;endSize=12;fontStyle=2" edge="1" parent="boundary" source="uc-admin" target="uc-console">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="firebase-subsystem" name="03 — Backend: Firebase identity">
+    <mxGraphModel dx="1100" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="boundary" value="Subsystem — Identity &amp; token services (Firebase)" style="swimlane;whiteSpace=wrap;html=1;fillColor=none;startSize=44;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="180" y="100" width="480" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-verify" value="Verify identity token" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="260" y="60" width="160" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-create" value="Create / manage user" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="60" y="140" width="160" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-syncuid" value="Sync UID to backend" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="260" y="150" width="170" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="fb" value="Firebase" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=default;" vertex="1" parent="1">
+          <mxGeometry x="60" y="180" width="40" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" style="endArrow=none;html=1;" edge="1" parent="1" source="fb" target="uc-verify">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" style="endArrow=none;html=1;" edge="1" parent="1" source="fb" target="uc-create">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inc" value="«include»" style="endArrow=open;dashed=1;html=1;endSize=12;fontStyle=2" edge="1" parent="boundary" source="uc-verify" target="uc-syncuid">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="api-persistence" name="04 — Backend: API &amp; persistence">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="boundary" value="Subsystem — Application API &amp; persistence&#xa;(Django + SQLite / Firestore)" style="swimlane;whiteSpace=wrap;html=1;fillColor=none;startSize=52;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="120" y="60" width="760" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-save" value="Save diagnosis result" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="50" y="70" width="150" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-fetch" value="Fetch diagnosis history" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="50" y="140" width="170" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-syncprof" value="Sync user profile (/me/)" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="50" y="210" width="180" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-veradmin" value="Verify admin role" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="50" y="280" width="140" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-rw" value="Read / write records" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="460" y="70" width="150" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-persist" value="Persist diagnosis data" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="460" y="140" width="160" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-store" value="Store user records" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="boundary">
+          <mxGeometry x="460" y="210" width="140" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="dj" value="Django API" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=default;" vertex="1" parent="1">
+          <mxGeometry x="40" y="180" width="40" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="db" value="SQLite / Firestore" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=default;" vertex="1" parent="1">
+          <mxGeometry x="920" y="180" width="40" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="d1" style="endArrow=none;html=1;" edge="1" parent="1" source="dj" target="uc-save">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d2" style="endArrow=none;html=1;" edge="1" parent="1" source="dj" target="uc-fetch">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d3" style="endArrow=none;html=1;" edge="1" parent="1" source="dj" target="uc-syncprof">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d4" style="endArrow=none;html=1;" edge="1" parent="1" source="dj" target="uc-veradmin">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="db1" style="endArrow=none;html=1;" edge="1" parent="1" source="db" target="uc-rw">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="db2" style="endArrow=none;html=1;" edge="1" parent="1" source="db" target="uc-persist">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="db3" style="endArrow=none;html=1;" edge="1" parent="1" source="db" target="uc-store">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i1" value="«include»" style="endArrow=open;dashed=1;html=1;endSize=12;fontStyle=2" edge="1" parent="boundary" source="uc-save" target="uc-rw">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i2" value="«include»" style="endArrow=open;dashed=1;html=1;endSize=12;fontStyle=2" edge="1" parent="boundary" source="uc-fetch" target="uc-persist">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i3" value="«include»" style="endArrow=open;dashed=1;html=1;endSize=12;fontStyle=2" edge="1" parent="boundary" source="uc-syncprof" target="uc-store">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

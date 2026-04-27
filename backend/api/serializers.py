@@ -1,13 +1,11 @@
 from rest_framework import serializers
 
-from .models import Diagnosis, Disease, Plant, User
-
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ("id", "email", "username", "role", "created_at")
-        read_only_fields = ("id", "role", "created_at")
+class UserSerializer(serializers.Serializer):
+    id = serializers.CharField(read_only=True)
+    email = serializers.EmailField(read_only=True)
+    username = serializers.CharField(read_only=True, allow_null=True, allow_blank=True)
+    role = serializers.CharField(read_only=True)
+    created_at = serializers.CharField(read_only=True, allow_null=True)
 
 
 class UserSyncSerializer(serializers.Serializer):
@@ -19,27 +17,45 @@ class UserSyncSerializer(serializers.Serializer):
     )
 
 
-class PlantSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Plant
-        fields = ("id", "name_en", "name_ar", "description_en", "description_ar")
+class PlantSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    name_en = serializers.CharField(read_only=True, allow_null=True, allow_blank=True)
+    name_ar = serializers.CharField(read_only=True, allow_null=True, allow_blank=True)
+    description_en = serializers.CharField(read_only=True, allow_null=True, allow_blank=True)
+    description_ar = serializers.CharField(read_only=True, allow_null=True, allow_blank=True)
 
 
-class DiseaseSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Disease
-        fields = (
-            "id",
-            "plant",
-            "name_en",
-            "name_ar",
-            "description_en",
-            "description_ar",
-            "causes_en",
-            "causes_ar",
-            "treatment_en",
-            "treatment_ar",
-        )
+class DiseaseCatalogWriteSerializer(serializers.Serializer):
+    """Admin PATCH: optional bilingual fields (omit keys you do not change)."""
+
+    name_en = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+    name_ar = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+    description_en = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+    description_ar = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+    causes_en = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+    causes_ar = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+    treatment_en = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+    treatment_ar = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+
+
+class PlantCatalogWriteSerializer(serializers.Serializer):
+    name_en = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+    name_ar = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+    description_en = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+    description_ar = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+
+
+class DiseaseSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    plant = PlantSerializer(read_only=True, allow_null=True)
+    name_en = serializers.CharField(read_only=True, allow_null=True, allow_blank=True)
+    name_ar = serializers.CharField(read_only=True, allow_null=True, allow_blank=True)
+    description_en = serializers.CharField(read_only=True, allow_null=True, allow_blank=True)
+    description_ar = serializers.CharField(read_only=True, allow_null=True, allow_blank=True)
+    causes_en = serializers.CharField(read_only=True, allow_null=True, allow_blank=True)
+    causes_ar = serializers.CharField(read_only=True, allow_null=True, allow_blank=True)
+    treatment_en = serializers.CharField(read_only=True, allow_null=True, allow_blank=True)
+    treatment_ar = serializers.CharField(read_only=True, allow_null=True, allow_blank=True)
 
 
 class DiagnosisCreateSerializer(serializers.Serializer):
@@ -79,19 +95,12 @@ class DiagnosisCreateSerializer(serializers.Serializer):
         return attrs
 
 
-class DiagnosisReadSerializer(serializers.ModelSerializer):
+class DiagnosisReadSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    user = serializers.CharField(read_only=True)
     disease = DiseaseSerializer(read_only=True)
-
-    class Meta:
-        model = Diagnosis
-        fields = (
-            "id",
-            "user",
-            "disease",
-            "input_type",
-            "image_url",
-            "text_input",
-            "confidence_score",
-            "created_at",
-        )
-        read_only_fields = fields
+    input_type = serializers.ChoiceField(choices=["image", "text"], read_only=True)
+    image_url = serializers.CharField(read_only=True, allow_null=True, allow_blank=True)
+    text_input = serializers.CharField(read_only=True, allow_null=True, allow_blank=True)
+    confidence_score = serializers.FloatField(read_only=True, allow_null=True)
+    created_at = serializers.CharField(read_only=True, allow_null=True)

@@ -44,11 +44,6 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
     "corsheaders",
@@ -58,11 +53,8 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "corsheaders.middleware.CorsMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
@@ -91,8 +83,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.dummy',
     }
 }
 
@@ -101,18 +92,6 @@ DATABASES = {
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
 ]
 
 
@@ -159,17 +138,54 @@ ALLOWED_STORAGE_IMAGE_URL_PREFIXES = os.environ.get(
     "ALLOWED_STORAGE_IMAGE_URL_PREFIXES", ""
 ).strip() or None
 
+
+def _resolve_under_base_dir(path: str) -> Path:
+    p = Path(path)
+    if p.is_absolute():
+        return p
+    return BASE_DIR / p
+
+
+# Vision model (PyTorch checkpoint under backend/models/ by default)
+VISION_MODEL_PATH = str(
+    _resolve_under_base_dir(
+        os.environ.get("VISION_MODEL_PATH", "models/final_model.pth"),
+    )
+)
+VISION_MIN_CONFIDENCE = float(os.environ.get("VISION_MIN_CONFIDENCE", "0.35"))
+VISION_IMAGE_MAX_BYTES = int(
+    os.environ.get("VISION_IMAGE_MAX_BYTES", str(10 * 1024 * 1024))
+)
+VISION_IMAGE_DOWNLOAD_TIMEOUT = int(
+    os.environ.get("VISION_IMAGE_DOWNLOAD_TIMEOUT", "30")
+)
+VISION_UNKNOWN_DISEASE_NAME_EN = os.environ.get(
+    "VISION_UNKNOWN_DISEASE_NAME_EN",
+    "Unknown / low confidence",
+)
+
+VISION_MODEL_NAME = os.environ.get("VISION_MODEL_NAME", "efficientnet_b1")
+VISION_WITCH_BROOM_LABEL = os.environ.get("VISION_WITCH_BROOM_LABEL", "Witch's Broom")
+VISION_WITCH_BROOM_MAX_DIFF = float(
+    os.environ.get("VISION_WITCH_BROOM_MAX_DIFF", "0.35")
+)
+VISION_LOG_CLASS_PROBS = os.environ.get("VISION_LOG_CLASS_PROBS", "true").lower() in (
+    "1",
+    "true",
+    "yes",
+)
 # Django REST framework
 # https://www.django-rest-framework.org/api-guide/settings/
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "api.authentication.FirebaseAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.AllowAny",
     ],
+    "UNAUTHENTICATED_USER": None,
+    "UNAUTHENTICATED_TOKEN": None,
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.JSONRenderer",
     ],

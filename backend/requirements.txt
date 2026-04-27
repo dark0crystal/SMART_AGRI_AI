@@ -5,3 +5,9 @@ django-cors-headers==4.9.0
 djangorestframework==3.17.1
 firebase-admin==7.3.0
 sqlparse==0.5.5
+# Vision inference (CPU wheels from PyPI; for CUDA follow https://pytorch.org/get-started/locally/)
+torch>=2.5.0
+torchvision>=0.20.0
+timm>=1.0.0
+Pillow>=10.0.0
+certifi>=2026.0.0
