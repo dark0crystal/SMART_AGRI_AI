@@ -1,0 +1,11 @@
+Test Case ID,Data Type,Input Description,Expected Class,Actual Class,Status
+TC-1,Artificial,Artificial image of a micro shoot for a healthy lemon tree branch.,Healthy,Witch Boom,Fail
+TC-2,Artificial,Artificial image of a big lemon tree with witch broom disease symptoms.,Witch Boom,Witch Boom,Pass
+TC-3,Artificial,Artificial image of a bunch of mango trees.,Unknown,Witch Boom,Fail
+TC-4,Available,Image for part of a healthy lemon tree from a public dataset.,Healthy,Healthy,Pass
+TC-5,Available,Image for part of a lemon tree diseased by witch broom from a public dataset.,Witch Boom,Witch Boom,Pass
+TC-6,Available,Image of a cloudy sky without any trees.,Unknown,Unknown,Pass
+TC-7,Available,Image for micro shoot for lemon branches with rot foot disease symptoms from a public dataset.,Unknown,Unknown,Pass
+TC-8,Available,Blurred micro shot of a lemon tree's healthy branches.,Unknown,Unknown,Pass
+TC-9,Real,Real image of a whole healthy lemon tree.,Healthy,Witch Boom,Fail
+TC-10,Real,Real images taken by Dr. Abdullah AL-Sadi For part of a lemon tree with clear witch broom disease symptoms.,Witch Boom,Witch Boom,Pass

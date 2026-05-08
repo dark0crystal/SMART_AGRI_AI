@@ -1,0 +1,167 @@
+"""
+Test configuration and test case definitions.
+Defines classification classes, data types, and test case metadata.
+"""
+
+# Classification classes for lemon disease diagnosis
+CLASSIFICATION_CLASSES = {
+    "Healthy": "Lemon image/description with healthy overall features or characteristics.",
+    "Witch Broom": "Lemon image/description with witch broom disease symptoms.",
+    "Unknown": (
+        "Image/description with one or more of the following:\n"
+        "  - Lemon plant diseased with another disease (not Witch Broom)\n"
+        "  - Image of another tree species (not lemon)\n"
+        "  - Unclear description or blurred photo\n"
+        "  - No plant image (sea, sky, land only)"
+    ),
+}
+
+# Data types used for testing
+DATA_TYPES = {
+    "Artificial": "AI-generated data to test performance against common standards",
+    "Available": "Data from public datasets to test robustness",
+    "Real": "Personally taken/written data to test real-world performance",
+}
+
+# Vision model test cases
+VISION_TEST_CASES = [
+    {
+        "id": "TC-1",
+        "data_type": "Artificial",
+        "input_description": "Artificial image of a micro shoot for a healthy lemon tree branch.",
+        "expected_class": "Healthy",
+        "category": "vision",
+    },
+    {
+        "id": "TC-2",
+        "data_type": "Artificial",
+        "input_description": "Artificial image of a big lemon tree with witch broom disease symptoms.",
+        "expected_class": "Witch Broom",
+        "category": "vision",
+    },
+    {
+        "id": "TC-3",
+        "data_type": "Artificial",
+        "input_description": "Artificial image of a bunch of mango trees.",
+        "expected_class": "Unknown",
+        "category": "vision",
+    },
+    {
+        "id": "TC-4",
+        "data_type": "Available",
+        "input_description": "Image for part of a healthy lemon tree from a public dataset.",
+        "expected_class": "Healthy",
+        "category": "vision",
+    },
+    {
+        "id": "TC-5",
+        "data_type": "Available",
+        "input_description": "Image for part of a lemon tree diseased by witch broom from a public dataset.",
+        "expected_class": "Witch Broom",
+        "category": "vision",
+    },
+    {
+        "id": "TC-6",
+        "data_type": "Available",
+        "input_description": "Image of a cloudy sky without any trees.",
+        "expected_class": "Unknown",
+        "category": "vision",
+    },
+    {
+        "id": "TC-7",
+        "data_type": "Available",
+        "input_description": "Image for micro shoot for lemon branches with rot foot disease symptoms from a public dataset.",
+        "expected_class": "Unknown",
+        "category": "vision",
+    },
+    {
+        "id": "TC-8",
+        "data_type": "Available",
+        "input_description": "Blurred micro shot of a lemon tree's healthy branches.",
+        "expected_class": "Unknown",
+        "category": "vision",
+    },
+    {
+        "id": "TC-9",
+        "data_type": "Real",
+        "input_description": "Real image of a whole healthy lemon tree.",
+        "expected_class": "Healthy",
+        "category": "vision",
+    },
+    {
+        "id": "TC-10",
+        "data_type": "Real",
+        "input_description": "Real images taken by Dr. Abdullah AL-Sadi for part of a lemon tree with clear witch broom disease symptoms.",
+        "expected_class": "Witch Broom",
+        "category": "vision",
+    },
+]
+
+# Text model test cases
+TEXT_TEST_CASES = [
+    {
+        "id": "TC-11",
+        "data_type": "Artificial",
+        "input_description": "Artificially created description for a healthy lemon plant.",
+        "expected_class": "Healthy",
+        "category": "text",
+    },
+    {
+        "id": "TC-12",
+        "data_type": "Artificial",
+        "input_description": "Artificially created description for a lemon plant diseased with witch broom.",
+        "expected_class": "Witch Broom",
+        "category": "text",
+    },
+    {
+        "id": "TC-13",
+        "data_type": "Artificial",
+        "input_description": "Artificially created description for a lemon tree diseased with greening.",
+        "expected_class": "Unknown",
+        "category": "text",
+    },
+    {
+        "id": "TC-14",
+        "data_type": "Available",
+        "input_description": "Description from a website for healthy lemon plant leaves.",
+        "expected_class": "Healthy",
+        "category": "text",
+    },
+    {
+        "id": "TC-15",
+        "data_type": "Available",
+        "input_description": "Description from a website for lemon witch broom disease symptoms.",
+        "expected_class": "Witch Broom",
+        "category": "text",
+    },
+    {
+        "id": "TC-16",
+        "data_type": "Available",
+        "input_description": "Description from a website for unhealthy lemon leaves.",
+        "expected_class": "Unknown",
+        "category": "text",
+    },
+    {
+        "id": "TC-17",
+        "data_type": "Real",
+        "input_description": "Real description generated by us for a healthy lemon tree.",
+        "expected_class": "Healthy",
+        "category": "text",
+    },
+    {
+        "id": "TC-18",
+        "data_type": "Real",
+        "input_description": "Real description generated by us for diseased witch broom lemon disease.",
+        "expected_class": "Witch Broom",
+        "category": "text",
+    },
+    {
+        "id": "TC-19",
+        "data_type": "Real",
+        "input_description": "Real description generated by us for lemon plants with no clear symptoms.",
+        "expected_class": "Unknown",
+        "category": "text",
+    },
+]
+
+ALL_TEST_CASES = VISION_TEST_CASES + TEXT_TEST_CASES
