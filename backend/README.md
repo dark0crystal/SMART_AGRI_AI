@@ -105,7 +105,7 @@ Image diagnoses use an in-process **PyTorch + timm** checkpoint (same format as 
 | `VISION_UNKNOWN_DISEASE_NAME_EN` | English `Disease.name_en` for the fallback row (default `Unknown / low confidence`) |
 | `VISION_MODEL_NAME` | Fallback timm architecture when checkpoint has no `config.model` (default `efficientnet_b1`) |
 
-**Text diagnosis:** `POST` with `input_type: text` still uses a **placeholder** heuristic (`text_stub_v1` in `ai_logs`), not an ML model. The Flutter text flow remains usable until a text model is integrated.
+**Text diagnosis:** `POST` with `input_type: text` uses a TF-IDF cosine similarity model (`tfidf_v1` in `ai_logs`). Disease description files are loaded from `TEXT_MODEL_PATH` (default `models/text_classes/`). The minimum similarity threshold is controlled by `TEXT_MIN_CONFIDENCE` (default `0.10`).
 
 ### Gradio demo (`models/app.py`)
 

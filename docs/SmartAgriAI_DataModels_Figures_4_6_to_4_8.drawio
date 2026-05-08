@@ -1,0 +1,228 @@
+<mxfile host="app.diagrams.net" modified="2026-05-05T12:00:00.000Z" agent="SmartAgriAI" version="22.1.0" type="device">
+  <diagram id="fig46" name="Figure 4.6 Class Diagram">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t46" value="&lt;font style=&quot;font-size:14px&quot;&gt;&lt;b&gt;Figure 4.6 — Class diagram (consistent with EER)&lt;/b&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="u46" value="&lt;div style=&quot;text-align:left;font-size:11px&quot;&gt;&lt;div style=&quot;text-align:center&quot;&gt;&lt;b&gt;User&lt;/b&gt;&lt;/div&gt;&lt;hr/&gt;&lt;b&gt;Attributes&lt;/b&gt;&lt;br/&gt;id (PK / Firebase UID)&lt;br/&gt;email&lt;br/&gt;username&lt;br/&gt;role (user | admin)&lt;br/&gt;created_at&lt;br/&gt;&lt;hr/&gt;&lt;b&gt;Methods&lt;/b&gt;&lt;br/&gt;login()&lt;br/&gt;logout()&lt;br/&gt;register()&lt;br/&gt;syncProfile()&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="120" width="220" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="p46" value="&lt;div style=&quot;text-align:left;font-size:11px&quot;&gt;&lt;div style=&quot;text-align:center&quot;&gt;&lt;b&gt;Plant&lt;/b&gt;&lt;/div&gt;&lt;hr/&gt;&lt;b&gt;Attributes&lt;/b&gt;&lt;br/&gt;plant_id (PK)&lt;br/&gt;name_en, name_ar&lt;br/&gt;description_en, description_ar&lt;br/&gt;created_at&lt;br/&gt;&lt;hr/&gt;&lt;b&gt;Methods&lt;/b&gt;&lt;br/&gt;getPlantInfo()&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="420" width="220" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="d46" value="&lt;div style=&quot;text-align:left;font-size:11px&quot;&gt;&lt;div style=&quot;text-align:center&quot;&gt;&lt;b&gt;Disease&lt;/b&gt;&lt;/div&gt;&lt;hr/&gt;&lt;b&gt;Attributes&lt;/b&gt;&lt;br/&gt;disease_id (PK)&lt;br/&gt;plant_id (FK → Plant)&lt;br/&gt;name_en, name_ar&lt;br/&gt;description_en/ar&lt;br/&gt;causes_en/ar&lt;br/&gt;treatment_en/ar&lt;br/&gt;&lt;hr/&gt;&lt;b&gt;Methods&lt;/b&gt;&lt;br/&gt;getDiseaseInfo()&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="380" y="420" width="240" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="diag46" value="&lt;div style=&quot;text-align:left;font-size:11px&quot;&gt;&lt;div style=&quot;text-align:center&quot;&gt;&lt;b&gt;Diagnosis&lt;/b&gt;&lt;/div&gt;&lt;hr/&gt;&lt;b&gt;Attributes&lt;/b&gt;&lt;br/&gt;diagnosis_id (PK)&lt;br/&gt;user_id (FK → User)&lt;br/&gt;disease_id (FK → Disease)&lt;br/&gt;plant_id (FK → Plant)&lt;br/&gt;input_type (image | text)&lt;br/&gt;image_url, text_input&lt;br/&gt;confidence_score, created_at&lt;br/&gt;&lt;hr/&gt;&lt;b&gt;Methods&lt;/b&gt;&lt;br/&gt;createDiagnosis()&lt;br/&gt;getDiagnosis()&lt;br/&gt;listDiagnoses()&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="720" y="120" width="260" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="ai46" value="&lt;div style=&quot;text-align:left;font-size:11px&quot;&gt;&lt;div style=&quot;text-align:center&quot;&gt;&lt;b&gt;AI Log&lt;/b&gt;&lt;/div&gt;&lt;hr/&gt;&lt;b&gt;Attributes&lt;/b&gt;&lt;br/&gt;log_id (PK)&lt;br/&gt;diagnosis_id (FK → Diagnosis)&lt;br/&gt;input_data&lt;br/&gt;predicted_disease&lt;br/&gt;confidence_score&lt;br/&gt;created_at&lt;br/&gt;&lt;hr/&gt;&lt;b&gt;Methods&lt;/b&gt;&lt;br/&gt;saveLog()&lt;br/&gt;getLog()&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="160" width="220" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="r46" value="&lt;div style=&quot;text-align:left;font-size:11px&quot;&gt;&lt;div style=&quot;text-align:center&quot;&gt;&lt;b&gt;Review&lt;/b&gt;&lt;/div&gt;&lt;hr/&gt;&lt;i&gt;(reserved for future use)&lt;/i&gt;&lt;br/&gt;&lt;b&gt;Attributes&lt;/b&gt;&lt;br/&gt;review_id (PK)&lt;br/&gt;user_id (FK → User)&lt;br/&gt;diagnosis_id (FK → Diagnosis)&lt;br/&gt;rating, comment, created_at&lt;br/&gt;&lt;hr/&gt;&lt;b&gt;Methods&lt;/b&gt;&lt;br/&gt;submitReview()&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="460" width="260" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=ERmany;startArrow=ERmandOne;exitX=1;exitY=0.35;entryX=0;entryY=0.35;" edge="1" parent="1" source="u46" target="diag46">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e1l" value="submits" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="e1">
+          <mxGeometry x="-0.1" y="1" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=ERmany;startArrow=ERmandOne;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="p46" target="d46">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2l" value="belongs to / catalog" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="e2">
+          <mxGeometry x="-0.05" y="1" relative="1" as="geometry"><mxPoint y="-8" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=ERmany;startArrow=ERmandOne;exitX=0.5;exitY=0;entryX=0.25;entryY=1;" edge="1" parent="1" source="d46" target="diag46">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="500" y="360" /><mxPoint x="785" y="360" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="e3l" value="identifies" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="e3">
+          <mxGeometry x="-0.2" y="1" relative="1" as="geometry"><mxPoint x="10" y="-12" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=ERmandOne;startArrow=ERmandOne;exitX=1;exitY=0.25;entryX=0;entryY=0.5;" edge="1" parent="1" source="diag46" target="ai46">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4l" value="records (1:1)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="e4">
+          <mxGeometry x="-0.05" y="-1" relative="1" as="geometry"><mxPoint y="-10" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=ERmany;startArrow=ERmandOne;exitX=0.5;exitY=1;entryX=0.25;entryY=0;" edge="1" parent="1" source="u46" target="r46">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="170" y="400" /><mxPoint x="785" y="400" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="e5l" value="reviews" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="e5">
+          <mxGeometry x="0.2" y="1" relative="1" as="geometry"><mxPoint x="-20" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=ERmany;startArrow=ERmandOne;exitX=0.5;exitY=1;entryX=0.75;entryY=0;" edge="1" parent="1" source="diag46" target="r46">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6l" value="reviewed by" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="e6">
+          <mxGeometry x="-0.1" y="1" relative="1" as="geometry"><mxPoint x="15" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=ERmany;startArrow=ERmandOne;exitX=0.5;exitY=0;entryX=0.75;entryY=1;" edge="1" parent="1" source="p46" target="diag46">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="170" y="380" /><mxPoint x="915" y="380" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="e7l" value="context (plant_id)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;" vertex="1" connectable="0" parent="e7">
+          <mxGeometry x="0.15" y="1" relative="1" as="geometry"><mxPoint x="30" y="-6" as="offset" /></mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="fig47" name="Figure 4.7 EER Diagram">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t47" value="&lt;font style=&quot;font-size:14px&quot;&gt;&lt;b&gt;Figure 4.7 — Enhanced Entity-Relationship (EER) diagram&lt;/b&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="520" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="eu" value="&lt;font style=&quot;font-size:12px&quot;&gt;&lt;b&gt;USER&lt;/b&gt;&lt;/font&gt;&lt;hr/&gt;&lt;u&gt;id&lt;/u&gt; PK (Firebase UID)&lt;br/&gt;email&lt;br/&gt;username&lt;br/&gt;role&lt;br/&gt;created_at" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="80" y="200" width="200" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ep" value="&lt;font style=&quot;font-size:12px&quot;&gt;&lt;b&gt;PLANT&lt;/b&gt;&lt;/font&gt;&lt;hr/&gt;&lt;u&gt;plant_id&lt;/u&gt; PK&lt;br/&gt;name_en, name_ar&lt;br/&gt;description_en, description_ar&lt;br/&gt;created_at" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="400" y="80" width="210" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="ed" value="&lt;font style=&quot;font-size:12px&quot;&gt;&lt;b&gt;DISEASE&lt;/b&gt;&lt;/font&gt;&lt;hr/&gt;&lt;u&gt;disease_id&lt;/u&gt; PK&lt;br/&gt;&lt;i&gt;plant_id&lt;/i&gt; FK → PLANT&lt;br/&gt;name_en, name_ar&lt;br/&gt;descriptions, causes, treatments (bilingual)" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="400" y="320" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="edi" value="&lt;font style=&quot;font-size:12px&quot;&gt;&lt;b&gt;DIAGNOSIS&lt;/b&gt;&lt;/font&gt;&lt;hr/&gt;&lt;u&gt;diagnosis_id&lt;/u&gt; PK&lt;br/&gt;&lt;i&gt;user_id&lt;/i&gt; FK → USER&lt;br/&gt;&lt;i&gt;disease_id&lt;/i&gt; FK → DISEASE&lt;br/&gt;&lt;i&gt;plant_id&lt;/i&gt; FK → PLANT&lt;br/&gt;input_type, image_url, text_input&lt;br/&gt;confidence_score, created_at" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="780" y="200" width="260" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="eai" value="&lt;font style=&quot;font-size:12px&quot;&gt;&lt;b&gt;AI_LOG&lt;/b&gt;&lt;/font&gt;&lt;hr/&gt;&lt;u&gt;log_id&lt;/u&gt; PK&lt;br/&gt;&lt;i&gt;diagnosis_id&lt;/i&gt; FK → DIAGNOSIS&lt;br/&gt;input_data, predicted_disease&lt;br/&gt;confidence_score, created_at" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="220" width="240" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="er" value="&lt;font style=&quot;font-size:12px&quot;&gt;&lt;b&gt;REVIEW&lt;/b&gt;&lt;/font&gt; &lt;i&gt;(future)&lt;/i&gt;&lt;hr/&gt;&lt;u&gt;review_id&lt;/u&gt; PK&lt;br/&gt;&lt;i&gt;user_id&lt;/i&gt; FK → USER&lt;br/&gt;&lt;i&gt;diagnosis_id&lt;/i&gt; FK → DIAGNOSIS&lt;br/&gt;rating, comment, created_at" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;spacingLeft=6;spacingTop=4;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="780" y="480" width="260" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="rh1" value="SUBMITS" style="rhombus;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="300" y="225" width="100" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="fix_rh2" value="CATALOG&#xa;(1 plant : N diseases)" style="rhombus;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="465" y="228" width="100" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="rh3" value="IDENTIFIES" style="rhombus;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="640" y="240" width="100" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="rh4" value="RECORDS" style="rhombus;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="235" width="90" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rh5" value="REVIEWS" style="rhombus;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=10;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="600" y="500" width="90" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_u_rh1" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="eu" target="rh1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_1_1" value="1" style="text;html=1;align=center;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="285" y="248" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_rh1_di" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="rh1" target="edi">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_1_n" value="N" style="text;html=1;align=center;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="730" y="248" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_p_cat" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="ep" target="fix_rh2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_p_1" value="1" style="text;html=1;align=center;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="505" y="208" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_cat_d" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="fix_rh2" target="ed">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_d_n" value="N" style="text;html=1;align=center;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="505" y="308" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_d_rh3" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="ed" target="rh3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_d_1" value="1" style="text;html=1;align=center;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="680" y="300" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_rh3_di" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="rh3" target="edi">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_di_n2" value="N" style="text;html=1;align=center;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="750" y="248" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_di_rh4" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="edi" target="rh4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_di_1" value="1" style="text;html=1;align=center;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="248" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_rh4_ai" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="rh4" target="eai">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_ai_1" value="1" style="text;html=1;align=center;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="248" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_u_rev" style="endArrow=none;html=1;rounded=0;dashed=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5;" edge="1" parent="1" source="eu" target="rh5">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="180" y="420" /><mxPoint x="580" y="420" /><mxPoint x="580" y="530" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="edge_rh5_r" style="endArrow=none;html=1;rounded=0;dashed=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="rh5" target="er">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_di_rev" style="endArrow=none;html=1;rounded=0;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="edi" target="er">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_p_di" style="edgeStyle=orthogonalEdgeStyle;endArrow=ERmany;startArrow=ERmandOne;html=1;rounded=0;dashed=1;exitX=1;exitY=0.5;entryX=0.5;entryY=0;" edge="1" parent="1" source="ep" target="edi">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="720" y="140" /><mxPoint x="910" y="140" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="edge_p_di_l" value="optional context&#xa;(plant_id)" style="edgeLabel;html=1;align=center;fontSize=9;fontStyle=2" vertex="1" connectable="0" parent="edge_p_di">
+          <mxGeometry x="-0.2" y="1" relative="1" as="geometry"><mxPoint x="20" y="-8" as="offset" /></mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="fig48" name="Figure 4.8 Relational Model">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t48" value="&lt;font style=&quot;font-size:14px&quot;&gt;&lt;b&gt;Figure 4.8 — Relational model (tables, keys, references)&lt;/b&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="560" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_users" value="&lt;div style=&quot;font-size:11px;text-align:left;line-height:1.35&quot;&gt;&lt;b&gt;users&lt;/b&gt;&lt;hr/&gt;&lt;b&gt;id&lt;/b&gt; — PK, VARCHAR (Firebase UID)&lt;br/&gt;&lt;b&gt;email&lt;/b&gt; — UNIQUE, VARCHAR&lt;br/&gt;&lt;b&gt;username&lt;/b&gt; — VARCHAR, NULL&lt;br/&gt;&lt;b&gt;role&lt;/b&gt; — VARCHAR (user | admin)&lt;br/&gt;&lt;b&gt;created_at&lt;/b&gt; — TIMESTAMP&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=#dae8fc;strokeColor=#6c8ebf;spacingLeft=8;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="60" y="100" width="280" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_plants" value="&lt;div style=&quot;font-size:11px;text-align:left;line-height:1.35&quot;&gt;&lt;b&gt;plants&lt;/b&gt; &lt;i&gt;(thesis: plant_id PK; Django default: id)&lt;/i&gt;&lt;hr/&gt;&lt;b&gt;id / plant_id&lt;/b&gt; — PK&lt;br/&gt;&lt;b&gt;name_en, name_ar&lt;/b&gt; — VARCHAR&lt;br/&gt;&lt;b&gt;description_en, description_ar&lt;/b&gt; — TEXT, NULL&lt;br/&gt;&lt;b&gt;created_at&lt;/b&gt; — TIMESTAMP&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=#d5e8d4;strokeColor=#82b366;spacingLeft=8;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="400" y="100" width="320" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_diseases" value="&lt;div style=&quot;font-size:11px;text-align:left;line-height:1.35&quot;&gt;&lt;b&gt;diseases&lt;/b&gt;&lt;hr/&gt;&lt;b&gt;id / disease_id&lt;/b&gt; — PK&lt;br/&gt;&lt;b&gt;plant_id&lt;/b&gt; — FK → plants.PK, NOT NULL&lt;br/&gt;&lt;b&gt;name_en, name_ar&lt;/b&gt; — VARCHAR&lt;br/&gt;&lt;b&gt;description_*, causes_*, treatment_*&lt;/b&gt; — TEXT, NULL&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;spacingLeft=8;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="400" y="280" width="360" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_diagnoses" value="&lt;div style=&quot;font-size:11px;text-align:left;line-height:1.35&quot;&gt;&lt;b&gt;diagnoses&lt;/b&gt;&lt;hr/&gt;&lt;b&gt;id / diagnosis_id&lt;/b&gt; — PK&lt;br/&gt;&lt;b&gt;user_id&lt;/b&gt; — FK → users.id, NOT NULL&lt;br/&gt;&lt;b&gt;disease_id&lt;/b&gt; — FK → diseases.id, NOT NULL&lt;br/&gt;&lt;b&gt;input_type&lt;/b&gt; — CHECK (image | text)&lt;br/&gt;&lt;b&gt;image_url, text_input&lt;/b&gt; — TEXT, NULL&lt;br/&gt;&lt;b&gt;confidence_score&lt;/b&gt; — FLOAT, NULL&lt;br/&gt;&lt;b&gt;created_at&lt;/b&gt; — TIMESTAMP&lt;br/&gt;&lt;i&gt;Optional EER field: plant_id FK → plants (not in current Django model).&lt;/i&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=#e1d5e7;strokeColor=#9673a6;spacingLeft=8;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="820" y="100" width="400" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_ai_logs" value="&lt;div style=&quot;font-size:11px;text-align:left;line-height:1.35&quot;&gt;&lt;b&gt;ai_logs&lt;/b&gt;&lt;hr/&gt;&lt;b&gt;id / log_id&lt;/b&gt; — PK&lt;br/&gt;&lt;b&gt;diagnosis_id&lt;/b&gt; — FK → diagnoses.id (design: 1 diagnosis : 1 log)&lt;br/&gt;&lt;b&gt;input_data&lt;/b&gt; — TEXT, NULL&lt;br/&gt;&lt;b&gt;predicted_disease&lt;/b&gt; — VARCHAR, NULL&lt;br/&gt;&lt;b&gt;confidence_score&lt;/b&gt; — FLOAT, NULL&lt;br/&gt;&lt;b&gt;created_at&lt;/b&gt; — TIMESTAMP&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=#f8cecc;strokeColor=#b85450;spacingLeft=8;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="110" width="320" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_reviews" value="&lt;div style=&quot;font-size:11px;text-align:left;line-height:1.35&quot;&gt;&lt;b&gt;reviews&lt;/b&gt; &lt;i&gt;(future)&lt;/i&gt;&lt;hr/&gt;&lt;b&gt;id / review_id&lt;/b&gt; — PK&lt;br/&gt;&lt;b&gt;user_id&lt;/b&gt; — FK → users.id, NOT NULL&lt;br/&gt;&lt;b&gt;diagnosis_id&lt;/b&gt; — FK → diagnoses.id, NOT NULL&lt;br/&gt;&lt;b&gt;rating, comment&lt;/b&gt; — INT / TEXT, NULL&lt;br/&gt;&lt;b&gt;created_at&lt;/b&gt; — TIMESTAMP&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=#ffe6cc;strokeColor=#d79b00;spacingLeft=8;spacingTop=6;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="820" y="340" width="360" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="fk1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=ERmandOne;startArrow=ERmandOne;exitX=0.5;exitY=1;entryX=0.5;entryY=0;dashed=1;" edge="1" parent="1" source="tbl_plants" target="tbl_diseases">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fk1l" value="plant_id" style="edgeLabel;html=1;fontSize=10;" vertex="1" connectable="0" parent="fk1"><mxGeometry x="-0.2" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+        <mxCell id="fk2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=ERmandOne;startArrow=ERmandOne;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="tbl_users" target="tbl_diagnoses">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="340" y="165" /><mxPoint x="340" y="200" /><mxPoint x="820" y="200" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="fk3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=ERmandOne;startArrow=ERmandOne;exitX=1;exitY=0.75;entryX=0;entryY=0.75;" edge="1" parent="1" source="tbl_diseases" target="tbl_diagnoses">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="780" y="378" /><mxPoint x="780" y="250" /><mxPoint x="820" y="250" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="fk4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=ERmandOne;startArrow=ERmandOne;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="tbl_diagnoses" target="tbl_ai_logs">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fk5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=ERmandOne;startArrow=ERmandOne;dashed=1;exitX=0.25;exitY=1;entryX=0.25;entryY=0;" edge="1" parent="1" source="tbl_diagnoses" target="tbl_reviews">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fk6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=ERmandOne;startArrow=ERmandOne;dashed=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5;" edge="1" parent="1" source="tbl_users" target="tbl_reviews">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="200" y="250" /><mxPoint x="200" y="425" /><mxPoint x="820" y="425" /></Array></mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

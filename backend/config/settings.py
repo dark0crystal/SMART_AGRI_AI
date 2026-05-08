@@ -174,6 +174,14 @@ VISION_LOG_CLASS_PROBS = os.environ.get("VISION_LOG_CLASS_PROBS", "true").lower(
     "true",
     "yes",
 )
+
+# Text model (TF-IDF cosine similarity against disease description files)
+TEXT_MODEL_PATH = str(
+    _resolve_under_base_dir(
+        os.environ.get("TEXT_MODEL_PATH", "models/text_classes"),
+    )
+)
+TEXT_MIN_CONFIDENCE = float(os.environ.get("TEXT_MIN_CONFIDENCE", "0.10"))
 # Django REST framework
 # https://www.django-rest-framework.org/api-guide/settings/
 

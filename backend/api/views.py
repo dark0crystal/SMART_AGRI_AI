@@ -104,7 +104,7 @@ def diagnoses_list(request):
     GET: paginated list of the caller's diagnoses.
 
     POST: create a diagnosis. Image input runs the PyTorch checkpoint (`VISION_MODEL_PATH`);
-    text input uses a placeholder heuristic until a text model is added (`text_stub_v1` in ai_logs).
+    text input runs TF-IDF cosine similarity against disease descriptions (`tfidf_v1` in ai_logs).
     """
     uid = getattr(request.user, "uid", None)
     if not uid:

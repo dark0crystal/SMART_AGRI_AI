@@ -1,5 +1,5 @@
 """
-Lemon leaf disease prediction: vision uses PyTorch checkpoint; text is placeholder until a text model exists.
+Lemon leaf disease prediction: vision uses PyTorch checkpoint; text uses TF-IDF cosine similarity.
 """
 
 from __future__ import annotations
@@ -26,6 +26,7 @@ class VisionDependenciesMissing(Exception):
 
 
 _vision_bundle: tuple[Any, list[str], Any] | None = None
+_text_bundle: tuple[Any, Any, list[str]] | None = None
 
 
 def _diseases_for_plant(plant_id: int) -> list[dict[str, Any]]:
@@ -91,6 +92,19 @@ def _maybe_warn_missing_catalog(class_names: list[str]) -> None:
             "Fallback disease %r missing from catalog for Lemon.",
             unknown_label,
         )
+
+
+def _get_text_bundle():
+    global _text_bundle
+    if _text_bundle is None:
+        from text.predict import load_text_model
+
+        path = Path(settings.TEXT_MODEL_PATH)
+        if not path.is_dir():
+            raise ValueError(f"Text model folder not found: {path}")
+        vectorizer, class_matrix, class_names = load_text_model(path)
+        _text_bundle = (vectorizer, class_matrix, class_names)
+    return _text_bundle
 
 
 def _download_image(url: str, max_bytes: int, timeout: int) -> bytes:
@@ -246,9 +260,9 @@ def predict_lemon_disease(
             unknown_row=unknown_row,
         )
 
-    return _predict_text_stub(
+    return _predict_text(
         text_input=text_input,
-        diseases=diseases,
+        diseases_by_name=diseases_by_name,
         unknown_row=unknown_row,
     )
 
@@ -414,32 +428,50 @@ def predict_lemon_uploaded_image(
     }
 
 
-def _predict_text_stub(
+def _predict_text(
     *,
     text_input: str | None,
-    diseases: list[dict[str, Any]],
+    diseases_by_name: dict[str, dict[str, Any]],
     unknown_row: dict[str, Any],
 ) -> dict[str, Any]:
-    raw: dict[str, Any] = {
-        "input_type": "text",
-        "text_excerpt": (text_input or "")[:500],
-        "has_image": False,
-        "policy": "text_stub_v1",
-    }
+    from text.predict import predict_from_text
 
-    lower = (text_input or "").lower()
-    unknown_by_keyword = next(
-        (d for d in diseases if "unknown" in d["name_en"].lower()),
-        None,
-    )
-    if unknown_by_keyword and ("unknown" in lower or "unsure" in lower):
-        chosen = unknown_by_keyword
-        confidence = 0.55
+    vectorizer, class_matrix, class_names = _get_text_bundle()
+    out = predict_from_text(text_input or "", vectorizer, class_matrix, class_names)
+
+    label = out["predicted_label"]
+    confidence = float(out["confidence"])
+    min_conf = settings.TEXT_MIN_CONFIDENCE
+
+    if confidence < min_conf:
+        chosen = unknown_row
+        raw = {
+            "input_type": "text",
+            "text_excerpt": (text_input or "")[:500],
+            "policy": "tfidf_v1",
+            "below_min_confidence": True,
+            "min_confidence": min_conf,
+            "model_top_label": label,
+            "model_top_score": confidence,
+            "all_scores": out["all_scores"],
+        }
     else:
-        chosen = diseases[0]
-        confidence = 0.82
-
-    raw["chosen_disease"] = chosen["name_en"]
+        chosen = _resolve_disease_for_label(
+            label=label,
+            diseases_by_name=diseases_by_name,
+            unknown=unknown_row,
+        )
+        raw = {
+            "input_type": "text",
+            "text_excerpt": (text_input or "")[:500],
+            "policy": "tfidf_v1",
+            "below_min_confidence": False,
+            "min_confidence": min_conf,
+            "chosen_disease": chosen["name_en"],
+            "model_top_label": label,
+            "model_top_score": confidence,
+            "all_scores": out["all_scores"],
+        }
 
     return {
         "disease_id": int(chosen["id"]),
