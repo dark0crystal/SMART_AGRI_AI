@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../services/auth_api.dart';
 import '../services/diagnosis_api.dart';
+import '../services/session_sync.dart';
 
 class DiagnosisTextScreen extends StatefulWidget {
   const DiagnosisTextScreen({super.key});
@@ -31,7 +32,7 @@ class _DiagnosisTextScreenState extends State<DiagnosisTextScreen> {
     }
     setState(() => _loading = true);
     try {
-      await AuthApi.syncUser();
+      await SessionSync.ensure();
       final res = await DiagnosisApi.createDiagnosis(
         inputType: 'text',
         textInput: text,

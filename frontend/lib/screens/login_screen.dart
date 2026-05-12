@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../auth/auth_errors.dart';
-import '../auth/guest_sign_in.dart';
 import '../services/auth_api.dart';
+import '../services/session_sync.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -26,29 +26,6 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  Future<void> _continueAsGuest() async {
-    setState(() => _loading = true);
-    try {
-      await signInAsGuestAndSync();
-      if (!mounted) return;
-      context.go('/');
-    } on FirebaseAuthException catch (e) {
-      if (!mounted) return;
-      debugPrint('Guest FirebaseAuth error: ${e.code} ${e.message}');
-      _showError(firebaseAuthMessage(e));
-    } on AuthApiException catch (e) {
-      await FirebaseAuth.instance.signOut();
-      if (!mounted) return;
-      _showError(e.message);
-    } catch (e, st) {
-      if (!mounted) return;
-      debugPrint('Guest sign-in failed: $e\n$st');
-      _showError(e.toString());
-    } finally {
-      if (mounted) setState(() => _loading = false);
-    }
-  }
-
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
     setState(() => _loading = true);
@@ -57,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
         email: _email.text.trim(),
         password: _password.text,
       );
-      await AuthApi.syncUser();
+      await SessionSync.ensure(force: true);
       if (!mounted) return;
       context.go('/');
     } on FirebaseAuthException catch (e) {
@@ -134,11 +111,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextButton(
                   onPressed: _loading ? null : () => context.push('/register'),
                   child: const Text('Create an account'),
-                ),
-                const SizedBox(height: 8),
-                TextButton(
-                  onPressed: _loading ? null : _continueAsGuest,
-                  child: const Text('Continue as guest'),
                 ),
               ],
             ),

@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import ssl
 import urllib.error
 import urllib.request
@@ -27,6 +28,24 @@ class VisionDependenciesMissing(Exception):
 
 _vision_bundle: tuple[Any, list[str], Any] | None = None
 _text_bundle: tuple[Any, Any, list[str]] | None = None
+_catalog_warned: bool = False
+
+
+def _build_ssl_context() -> ssl.SSLContext:
+    """Build an SSL context once, preferring certifi's CA bundle when available."""
+    try:
+        import certifi
+
+        return ssl.create_default_context(cafile=certifi.where())
+    except Exception:
+        # Fall back to the system trust store when certifi is unavailable.
+        return ssl.create_default_context()
+
+
+# Built once per process; the underlying urllib opener reuses this context for
+# every TLS handshake, avoiding the ~50 ms/per-request rebuild cost.
+_SSL_CONTEXT = _build_ssl_context()
+_HTTPS_OPENER = urllib.request.build_opener(urllib.request.HTTPSHandler(context=_SSL_CONTEXT))
 
 
 def _diseases_for_plant(plant_id: int) -> list[dict[str, Any]]:
@@ -73,12 +92,26 @@ def _get_vision_bundle():
 
 
 def _maybe_warn_missing_catalog(class_names: list[str]) -> None:
-    lemon = get_default_lemon_plant()
-    if not lemon:
+    """Run the catalog/checkpoint sanity check at most once per process.
+
+    Called from the bundle loader (effectively once at startup via warmup),
+    not on every request. Failures here must never break inference, so all
+    Firestore errors are swallowed.
+    """
+    global _catalog_warned
+    if _catalog_warned:
         return
-    known = set(
-        row["name_en"] for row in list_diseases_for_plant(int(lemon["id"]))
-    )
+    _catalog_warned = True
+    try:
+        lemon = get_default_lemon_plant()
+        if not lemon:
+            return
+        known = set(
+            row["name_en"] for row in list_diseases_for_plant(int(lemon["id"]))
+        )
+    except Exception:
+        logger.exception("Catalog warn check failed; continuing without warnings")
+        return
     unknown_label = settings.VISION_UNKNOWN_DISEASE_NAME_EN
     for cn in class_names:
         if cn not in known:
@@ -108,23 +141,20 @@ def _get_text_bundle():
 
 
 def _download_image(url: str, max_bytes: int, timeout: int) -> bytes:
+    """Download an HTTPS image into memory, capped at ``max_bytes``.
+
+    Uses a module-level opener (and SSL context) so consecutive downloads can
+    reuse the TLS handshake / TCP connection where possible, instead of
+    rebuilding both per request.
+    """
     req = urllib.request.Request(
         url,
         headers={"User-Agent": "SmartAgriAI/1.0"},
         method="GET",
     )
-    ssl_context = None
     try:
-        import certifi
-
-        ssl_context = ssl.create_default_context(cafile=certifi.where())
-    except Exception:
-        # Fallback to default trust store when certifi is unavailable.
-        ssl_context = ssl.create_default_context()
-
-    try:
-        with urllib.request.urlopen(req, timeout=timeout, context=ssl_context) as resp:
-            chunks: list[bytes] = []
+        with _HTTPS_OPENER.open(req, timeout=timeout) as resp:
+            buf = BytesIO()
             total = 0
             while True:
                 chunk = resp.read(65536)
@@ -135,11 +165,11 @@ def _download_image(url: str, max_bytes: int, timeout: int) -> bytes:
                     raise ValueError(
                         f"Image exceeds maximum size ({max_bytes} bytes).",
                     )
-                chunks.append(chunk)
+                buf.write(chunk)
     except urllib.error.URLError as exc:
         raise ValueError(f"Could not download image URL: {exc.reason}") from exc
 
-    return b"".join(chunks)
+    return buf.getvalue()
 
 
 def _resolve_disease_for_label(
@@ -149,10 +179,26 @@ def _resolve_disease_for_label(
     unknown: dict[str, Any],
 ) -> dict[str, Any]:
     d = diseases_by_name.get(label)
+    if d is None:
+        # Text model class names can be compact (e.g., "DryLeaf") while catalog
+        # names are spaced (e.g., "Dry Leaf"). Match using normalized aliases.
+        aliases: dict[str, dict[str, Any]] = {
+            _normalize_label(name): row for name, row in diseases_by_name.items()
+        }
+        d = aliases.get(_normalize_label(label))
+        if d is None and _normalize_label(label) == "anthracose":
+            # Backward compatibility with legacy misspelling in text class files.
+            d = aliases.get("anthracnose")
     if d is not None:
         return d
     logger.warning("Predicted label %r not in catalog; using unknown row.", label)
     return unknown
+
+
+def _normalize_label(value: str) -> str:
+    value = value.strip().lower()
+    value = re.sub(r"[^a-z0-9]+", "", value)
+    return value
 
 
 def _apply_witch_broom_guard(

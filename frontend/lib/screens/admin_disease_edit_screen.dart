@@ -23,8 +23,6 @@ class _AdminDiseaseEditScreenState extends State<AdminDiseaseEditScreen> {
   late final TextEditingController _nameAr;
   late final TextEditingController _descEn;
   late final TextEditingController _descAr;
-  late final TextEditingController _causesEn;
-  late final TextEditingController _causesAr;
   late final TextEditingController _treatEn;
   late final TextEditingController _treatAr;
 
@@ -37,8 +35,6 @@ class _AdminDiseaseEditScreenState extends State<AdminDiseaseEditScreen> {
     _nameAr = TextEditingController();
     _descEn = TextEditingController();
     _descAr = TextEditingController();
-    _causesEn = TextEditingController();
-    _causesAr = TextEditingController();
     _treatEn = TextEditingController();
     _treatAr = TextEditingController();
     _load();
@@ -50,8 +46,6 @@ class _AdminDiseaseEditScreenState extends State<AdminDiseaseEditScreen> {
     _nameAr.dispose();
     _descEn.dispose();
     _descAr.dispose();
-    _causesEn.dispose();
-    _causesAr.dispose();
     _treatEn.dispose();
     _treatAr.dispose();
     super.dispose();
@@ -69,8 +63,6 @@ class _AdminDiseaseEditScreenState extends State<AdminDiseaseEditScreen> {
       _nameAr.text = d['name_ar']?.toString() ?? '';
       _descEn.text = d['description_en']?.toString() ?? '';
       _descAr.text = d['description_ar']?.toString() ?? '';
-      _causesEn.text = d['causes_en']?.toString() ?? '';
-      _causesAr.text = d['causes_ar']?.toString() ?? '';
       _treatEn.text = d['treatment_en']?.toString() ?? '';
       _treatAr.text = d['treatment_ar']?.toString() ?? '';
       final en = _nameEn.text.trim();
@@ -104,8 +96,6 @@ class _AdminDiseaseEditScreenState extends State<AdminDiseaseEditScreen> {
         'name_ar': _nameAr.text.trim(),
         'description_en': _descEn.text.trim(),
         'description_ar': _descAr.text.trim(),
-        'causes_en': _causesEn.text.trim(),
-        'causes_ar': _causesAr.text.trim(),
         'treatment_en': _treatEn.text.trim(),
         'treatment_ar': _treatAr.text.trim(),
       };
@@ -208,9 +198,6 @@ class _AdminDiseaseEditScreenState extends State<AdminDiseaseEditScreen> {
                       _sectionLabel(context, 'Description'),
                       _field('Description (English)', _descEn),
                       _field('Description (Arabic)', _descAr),
-                      _sectionLabel(context, 'Causes'),
-                      _field('Causes (English)', _causesEn),
-                      _field('Causes (Arabic)', _causesAr),
                       _sectionLabel(context, 'Treatment'),
                       _field('Treatment (English)', _treatEn),
                       _field('Treatment (Arabic)', _treatAr),

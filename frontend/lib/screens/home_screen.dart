@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../services/auth_api.dart';
+import '../services/session_sync.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _error = null;
     });
     try {
-      await AuthApi.syncUser();
+      await SessionSync.ensure();
       final me = await AuthApi.me();
       if (mounted) {
         setState(() {
@@ -55,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _signOut() async {
     await FirebaseAuth.instance.signOut();
+    SessionSync.reset();
     if (mounted) context.go('/login');
   }
 

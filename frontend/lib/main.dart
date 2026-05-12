@@ -15,6 +15,7 @@ import 'screens/admin_catalog_screen.dart';
 import 'screens/admin_disease_edit_screen.dart';
 import 'screens/admin_plant_diseases_screen.dart';
 import 'screens/home_screen.dart';
+import 'screens/landing_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/register_screen.dart';
 
@@ -88,17 +89,23 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     _authRefresh = AuthStateRefresh();
     _router = GoRouter(
-      initialLocation: '/login',
+      initialLocation: '/landing',
       refreshListenable: _authRefresh,
       redirect: (context, state) {
         final loggedIn = FirebaseAuth.instance.currentUser != null;
         final loc = state.matchedLocation;
+        final onPublicPage =
+            loc == '/landing' || loc == '/login' || loc == '/register';
         final onAuthPage = loc == '/login' || loc == '/register';
-        if (!loggedIn && !onAuthPage) return '/login';
+        if (!loggedIn && !onPublicPage) return '/login';
         if (loggedIn && onAuthPage) return '/';
         return null;
       },
       routes: [
+        GoRoute(
+          path: '/landing',
+          builder: (context, state) => const LandingScreen(),
+        ),
         GoRoute(
           path: '/login',
           builder: (context, state) => const LoginScreen(),

@@ -32,6 +32,9 @@ SECRET_KEY = os.environ.get(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# Default kept as "true" for local dev (the project's backend/.env leaves
+# DJANGO_DEBUG commented out). Production deployments MUST set
+# DJANGO_DEBUG=false explicitly in the environment.
 DEBUG = os.environ.get("DJANGO_DEBUG", "true").lower() in ("1", "true", "yes")
 
 ALLOWED_HOSTS = [
@@ -114,6 +117,20 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# Cache backend used to memoize Firestore reads for users and the read-mostly
+# plant/disease catalog. LocMemCache is per-process; in production, swap for
+# Redis/Memcached so multiple workers share the cache.
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "smart-agri-default",
+    }
+}
+
+# TTL (seconds) for cached entries; tunable via env for prod tuning.
+USER_CACHE_TTL = int(os.environ.get("USER_CACHE_TTL", "60"))
+CATALOG_CACHE_TTL = int(os.environ.get("CATALOG_CACHE_TTL", "300"))
+
 # Firebase Admin SDK (Auth, Firestore, Storage, Realtime Database)
 # https://firebase.google.com/docs/admin/setup
 #
@@ -157,7 +174,7 @@ VISION_IMAGE_MAX_BYTES = int(
     os.environ.get("VISION_IMAGE_MAX_BYTES", str(10 * 1024 * 1024))
 )
 VISION_IMAGE_DOWNLOAD_TIMEOUT = int(
-    os.environ.get("VISION_IMAGE_DOWNLOAD_TIMEOUT", "30")
+    os.environ.get("VISION_IMAGE_DOWNLOAD_TIMEOUT", "8")
 )
 VISION_UNKNOWN_DISEASE_NAME_EN = os.environ.get(
     "VISION_UNKNOWN_DISEASE_NAME_EN",
@@ -165,6 +182,15 @@ VISION_UNKNOWN_DISEASE_NAME_EN = os.environ.get(
 )
 
 VISION_MODEL_NAME = os.environ.get("VISION_MODEL_NAME", "efficientnet_b1")
+
+# Pre-load vision + text models (and run a warm-up forward pass) when the Django
+# app boots, so the first user request does not pay the multi-second cold start.
+# Disabled automatically for `manage.py` non-server commands (migrate, seed, etc.).
+AI_WARMUP_ON_START = os.environ.get("AI_WARMUP_ON_START", "true").lower() in (
+    "1",
+    "true",
+    "yes",
+)
 VISION_WITCH_BROOM_LABEL = os.environ.get("VISION_WITCH_BROOM_LABEL", "Witch's Broom")
 VISION_WITCH_BROOM_MAX_DIFF = float(
     os.environ.get("VISION_WITCH_BROOM_MAX_DIFF", "0.35")

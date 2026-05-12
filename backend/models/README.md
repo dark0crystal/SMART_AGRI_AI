@@ -119,3 +119,4 @@ python3 train_all_models.py --epochs 2 --batch-size 8
 
 - First run may take longer because pretrained model weights may download.
 - Full training can take a long time because all 7 configurations are trained.
+- The `model_comparison/` outputs described above are produced when you run `train_all_models.py`; they are not kept in the git repository (regenerate locally after cloning if needed).

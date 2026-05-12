@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../services/auth_api.dart';
 import '../services/diagnosis_api.dart';
+import '../services/session_sync.dart';
 
 class DiagnosisCameraScreen extends StatefulWidget {
   const DiagnosisCameraScreen({super.key});
@@ -19,13 +20,24 @@ class DiagnosisCameraScreen extends StatefulWidget {
 class _DiagnosisCameraScreenState extends State<DiagnosisCameraScreen> {
   bool _busy = false;
 
+  /// Vision model resizes to 224x224, so anything larger than ~1280px just
+  /// inflates upload time and Storage egress. Quality 80 is visually
+  /// indistinguishable for leaf photos but cuts JPEG size ~2x.
+  static const int _maxImageEdge = 1280;
+  static const int _imageQuality = 80;
+
+  /// Hard ceiling after compression. Anything larger almost certainly means
+  /// `image_picker` couldn't downscale the image (e.g. raw HEIC); we surface
+  /// a clear error rather than silently uploading multi-megabyte payloads.
+  static const int _maxUploadBytes = 4 * 1024 * 1024;
+
   Future<void> _pickAndUpload(ImageSource source) async {
     final picker = ImagePicker();
     final xfile = await picker.pickImage(
       source: source,
-      maxWidth: 2048,
-      maxHeight: 2048,
-      imageQuality: 85,
+      maxWidth: _maxImageEdge.toDouble(),
+      maxHeight: _maxImageEdge.toDouble(),
+      imageQuality: _imageQuality,
     );
     if (xfile == null) return;
 
@@ -41,8 +53,25 @@ class _DiagnosisCameraScreenState extends State<DiagnosisCameraScreen> {
 
     setState(() => _busy = true);
     try {
-      await AuthApi.syncUser();
+      // No-op when the session was already synced after sign-in/registration;
+      // covers the edge case where a persisted session opens straight into
+      // this screen without the home screen running first.
+      await SessionSync.ensure();
       final file = File(xfile.path);
+      final fileSize = await file.length();
+      if (fileSize > _maxUploadBytes) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Photo is too large to upload (${(fileSize / (1024 * 1024)).toStringAsFixed(1)} MB). '
+                'Try a different photo.',
+              ),
+            ),
+          );
+        }
+        return;
+      }
       final name =
           '${DateTime.now().millisecondsSinceEpoch}_${xfile.name.replaceAll(RegExp(r'[^\w.-]'), '_')}';
       final ref = FirebaseStorage.instance

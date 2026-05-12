@@ -7,17 +7,25 @@ from typing import Any
 
 IMAGE_SIZE = 224
 
+# Cached transform instance; build_infer_transform() returns the same object on
+# every call so the (small) torchvision import + Compose() construction don't
+# repeat per inference.
+_INFER_TRANSFORM: Any | None = None
+
 
 def build_infer_transform():
-    from torchvision import transforms
+    global _INFER_TRANSFORM
+    if _INFER_TRANSFORM is None:
+        from torchvision import transforms
 
-    return transforms.Compose(
-        [
-            transforms.Resize((IMAGE_SIZE, IMAGE_SIZE)),
-            transforms.ToTensor(),
-            transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
-        ]
-    )
+        _INFER_TRANSFORM = transforms.Compose(
+            [
+                transforms.Resize((IMAGE_SIZE, IMAGE_SIZE)),
+                transforms.ToTensor(),
+                transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
+            ]
+        )
+    return _INFER_TRANSFORM
 
 
 def load_checkpoint(

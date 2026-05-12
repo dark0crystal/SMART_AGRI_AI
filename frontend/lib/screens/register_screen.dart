@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../auth/auth_errors.dart';
-import '../auth/guest_sign_in.dart';
 import '../services/auth_api.dart';
+import '../services/session_sync.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -36,10 +36,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
         email: _email.text.trim(),
         password: _password.text,
       );
-      await AuthApi.syncUser(
+      await SessionSync.ensure(
         username: _username.text.trim().isEmpty
             ? null
             : _username.text.trim(),
+        force: true,
       );
       if (!mounted) return;
       context.go('/');
@@ -62,29 +63,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(message)),
     );
-  }
-
-  Future<void> _continueAsGuest() async {
-    setState(() => _loading = true);
-    try {
-      await signInAsGuestAndSync();
-      if (!mounted) return;
-      context.go('/');
-    } on FirebaseAuthException catch (e) {
-      if (!mounted) return;
-      debugPrint('Guest FirebaseAuth error: ${e.code} ${e.message}');
-      _showError(firebaseAuthMessage(e));
-    } on AuthApiException catch (e) {
-      await FirebaseAuth.instance.signOut();
-      if (!mounted) return;
-      _showError(e.message);
-    } catch (e, st) {
-      if (!mounted) return;
-      debugPrint('Guest sign-in failed: $e\n$st');
-      _showError(e.toString());
-    } finally {
-      if (mounted) setState(() => _loading = false);
-    }
   }
 
   @override
@@ -150,10 +128,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 TextButton(
                   onPressed: _loading ? null : () => context.pop(),
                   child: const Text('Already have an account? Sign in'),
-                ),
-                TextButton(
-                  onPressed: _loading ? null : _continueAsGuest,
-                  child: const Text('Continue as guest'),
                 ),
               ],
             ),

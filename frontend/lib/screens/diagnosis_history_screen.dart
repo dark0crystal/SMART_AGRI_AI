@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../services/auth_api.dart';
 import '../services/diagnosis_api.dart';
+import '../services/session_sync.dart';
 
 class DiagnosisHistoryScreen extends StatefulWidget {
   const DiagnosisHistoryScreen({super.key});
@@ -32,7 +33,7 @@ class _DiagnosisHistoryScreenState extends State<DiagnosisHistoryScreen> {
       _error = null;
     });
     try {
-      await AuthApi.syncUser();
+      await SessionSync.ensure();
       final res = await DiagnosisApi.listDiagnoses();
       final results = res['results'];
       if (results is List) {

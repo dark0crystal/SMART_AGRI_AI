@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../services/admin_catalog_api.dart';
 import '../services/auth_api.dart';
+import '../services/session_sync.dart';
 
 /// Admin entry: manage disease catalog (plants → diseases → bilingual text).
 class AdminCatalogScreen extends StatefulWidget {
@@ -33,7 +34,7 @@ class _AdminCatalogScreenState extends State<AdminCatalogScreen> {
       _gateError = null;
     });
     try {
-      await AuthApi.syncUser();
+      await SessionSync.ensure();
       final me = await AuthApi.me();
       final role = me['role']?.toString().toLowerCase();
       if (!mounted) return;
@@ -154,7 +155,7 @@ class _AdminCatalogScreenState extends State<AdminCatalogScreen> {
                                 children: [
                                   Text(
                                     'Choose a plant to edit disease names, '
-                                    'descriptions, causes, and treatments shown '
+                                    'descriptions, and treatments shown '
                                     'in the app after diagnosis.',
                                     style: Theme.of(context)
                                         .textTheme

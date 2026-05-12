@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 
 import '../services/auth_api.dart';
 import '../services/diagnosis_api.dart';
+import '../services/session_sync.dart';
 
 class DiagnosisDetailScreen extends StatefulWidget {
   const DiagnosisDetailScreen({super.key, required this.id});
@@ -32,7 +33,7 @@ class _DiagnosisDetailScreenState extends State<DiagnosisDetailScreen> {
       _error = null;
     });
     try {
-      await AuthApi.syncUser();
+      await SessionSync.ensure();
       final res = await DiagnosisApi.getDiagnosis(widget.id);
       if (mounted) {
         setState(() {
@@ -274,6 +275,14 @@ class _DiagnosisDetailScreenState extends State<DiagnosisDetailScreen> {
 
   Widget _diagnosisPhotoPreview(BuildContext context, String imageUrl) {
     final cs = Theme.of(context).colorScheme;
+    // Decode at the actual rendered size so Flutter doesn't allocate a
+    // full-resolution bitmap (camera photos are routinely 4-8MP). The image
+    // also stays in the in-memory ImageCache keyed by URL, so re-opening the
+    // same diagnosis doesn't re-download anything.
+    final dpr = MediaQuery.of(context).devicePixelRatio;
+    final logicalWidth = MediaQuery.of(context).size.width;
+    final decodeWidth = (logicalWidth * dpr).clamp(320, 1600).round();
+    final decodeHeight = (decodeWidth * 3 / 4).round();
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
@@ -283,6 +292,8 @@ class _DiagnosisDetailScreenState extends State<DiagnosisDetailScreen> {
           imageUrl,
           fit: BoxFit.cover,
           alignment: Alignment.center,
+          cacheWidth: decodeWidth,
+          cacheHeight: decodeHeight,
           loadingBuilder: (context, child, loadingProgress) {
             if (loadingProgress == null) return child;
             return ColoredBox(
